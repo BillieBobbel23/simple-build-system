@@ -1,7 +1,7 @@
 const { parallel, src, dest, watch } = require("gulp");
 const path = require("path");
 const size = require("gulp-size");
-var rename = require("gulp-rename");
+const rename = require("gulp-rename");
 
 // Sass to CSS
 const sass = require("gulp-sass");
@@ -80,7 +80,6 @@ exports.fonts = parallel(makeWoff, makeWoff2);
 exports.generate = parallel(images, makeWoff, makeWoff2);
 exports.default = parallel(css, images, makeWoff, makeWoff2);
 
-exports.lintCss = lintCss;
 exports.lint = lintCss;
 
 exports.watchAll = watchAll;
