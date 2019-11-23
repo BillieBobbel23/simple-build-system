@@ -15,6 +15,8 @@ Run some simple tasks for your project using GulpJS:
 
 * Image compression (for most older formats)
 
+* WebP creation for images
+
 * Linting (only CSS for now)
 
 * Some feedback about file sizes
