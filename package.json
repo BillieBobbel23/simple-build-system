@@ -1,13 +1,14 @@
 {
   "name": "simple-gulp-tasks",
   "version": "0.2.0",
-  "description": "Gulp 4 tasks for a simple (non JS) web application ",
+  "description": "Gulp 4 tasks for a simple web application.",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp",
     "watch": "gulp watch",
-    "lint:css": "gulp lintCss"
+    "lint:css": "gulp lintCss",
+    "serve": "start npx serve && start npm run watch && start http://localhost:5000"
   },
   "keywords": [
     "gulp",

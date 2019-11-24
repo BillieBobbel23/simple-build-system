@@ -20,7 +20,7 @@ const csslint = require("gulp-csslint");
 const stylestats = require("gulp-stylestats");
 
 const config = {
-  input: "src/",
+  input: "test/",
   output: "dist/"
 };
 
