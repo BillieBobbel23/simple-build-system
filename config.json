@@ -1,0 +1,11 @@
+{
+  "in": "test/",
+  "out": "dist/",
+
+  "fonts": "fonts/",
+  "img": "images/",
+  "scss": "scss/",
+  "svg": "svg/",
+
+  "css": "css/"
+}

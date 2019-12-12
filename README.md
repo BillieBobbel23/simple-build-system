@@ -20,3 +20,18 @@ Run some simple tasks for your project using GulpJS:
 * Linting (only CSS for now)
 
 * Some feedback about file sizes
+
+## Tasks
+
+- ``npm run build ``  
+Builds all assets and moves them into the output folder
+
+- ``npm run serve ``  
+**Windows only**  
+Starts an npx webserver, watches assets for changes and opens the index.html  
+
+- ``npm run watch ``    
+Watches assets for changes
+
+- ``npm run lint:css ``    
+Builds and lints CSS file(s)

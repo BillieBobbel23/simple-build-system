@@ -19,12 +19,9 @@ const ttf2woff2 = require("gulp-ttf2woff2");
 const csslint = require("gulp-csslint");
 const stylestats = require("gulp-stylestats");
 
-const config = {
-  input: "test/",
-  output: "dist/"
-};
+// configuration
+const conf = require("./config");
 
-// DRY up the feedback for sizes
 function feedback(title, compact = true, pretty = true) {
   return {
     title: title,
@@ -34,48 +31,44 @@ function feedback(title, compact = true, pretty = true) {
 }
 
 function css() {
-  return src(path.resolve("./", config.input, "scss/**/*.scss"))
+  return src(path.resolve("./", conf.in, conf.scss, "**/*.scss"))
     .pipe(sass())
     .pipe(autoprefixer())
-    .pipe(dest(config.output + "css"))
-    .pipe(csso({ sourceMap: true }))
-    .pipe(size(feedback("Created CSS file(s)")))
-    .pipe(rename({ extname: ".min.css" }))
-    .pipe(dest(path.resolve("./", config.output, "css")));
+    .pipe(
+      dest(path.resolve(conf.out, conf.css))
+        .pipe(csso({ sourceMap: true }))
+        .pipe(size(feedback("Created CSS file(s)")))
+        .pipe(rename({ extname: ".min.css" }))
+        .pipe(dest(path.resolve("./", conf.out, conf.css)))
+    );
 }
 
 function images() {
   return (
-    src(config.input + "img/**/*")
+    src(path.resolve("./", conf.in, conf.img, "**/*"))
       .pipe(imagemin())
       .pipe(size(feedback("Compressed image(s)")))
-      .pipe(dest(path.resolve("./", config.output, "img")))
+      .pipe(dest(path.resolve("./", conf.out, conf.img)))
       // make WebP images
       .pipe(webp())
       .pipe(size(feedback("Created WebP image(s)")))
-      .pipe(dest(path.resolve("./", config.output, "img")))
+      .pipe(dest(path.resolve("./", conf.out, conf.img)))
   );
 }
 
 function svg() {
-  return src(path.resolve("./", config.input, "svg/*.svg"))
+  return src(path.resolve("./", conf.in, conf.svg, "*.svg"))
     .pipe(svgmin({}))
     .pipe(size(feedback("Optimized SVG((s)")))
-    .pipe(dest(path.resolve("./", config.output, "svg")));
+    .pipe(dest(path.resolve("./", conf.out, conf.svg)));
 }
 
-function makeWoff() {
-  return src(path.resolve("./", config.input, "fonts/*.{ttf,otf}"))
+function fonts() {
+  return src(path.resolve("./", conf.in, conf.fonts, "*.{ttf,otf}"))
     .pipe(ttf2woff())
-    .pipe(size(feedback("Created WOFF font(s):")))
-    .pipe(dest(path.resolve("./", config.output, "fonts")));
-}
-
-function makeWoff2() {
-  return src(path.resolve("./", config.input, "fonts/*.{ttf,otf}"))
     .pipe(ttf2woff2())
-    .pipe(size(feedback("Created WOFF2 font(s):")))
-    .pipe(dest(path.resolve("./", config.output, "fonts")));
+    .pipe(size(feedback("Created WOFF and WOFF2 font(s):")))
+    .pipe(dest(path.resolve("./", conf.out, conf.fonts)));
 }
 
 function lintCss() {
@@ -104,9 +97,11 @@ function lintCss() {
 // Watcher
 function watchAll() {
   watch("./src/scss/**/*.scss", css);
+  watch("./src/img/**/*.*", [images, svg]);
+  watch("./src/fonts/**/*.*", fonts);
 }
 
 exports.lintCss = lintCss;
 
 exports.watch = watchAll;
-exports.default = parallel(css, images, makeWoff, makeWoff2, svg);
+exports.default = parallel(css, images, fonts, svg);
