@@ -1,9 +1,11 @@
 {
+  "root": "./",
+
   "in": "test/",
   "out": "dist/",
 
   "fonts": "fonts/",
-  "img": "images/",
+  "img": "img/",
   "scss": "scss/",
   "svg": "svg/",
 

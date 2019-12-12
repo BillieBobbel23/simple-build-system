@@ -31,7 +31,7 @@ function feedback(title, compact = true, pretty = true) {
 }
 
 function css() {
-  return src(path.resolve("./", conf.in, conf.scss, "**/*.scss"))
+  return src(path.resolve(conf.root, conf.in, conf.scss, "**/*.scss"))
     .pipe(sass())
     .pipe(autoprefixer())
     .pipe(
@@ -39,43 +39,43 @@ function css() {
         .pipe(csso({ sourceMap: true }))
         .pipe(size(feedback("Created CSS file(s)")))
         .pipe(rename({ extname: ".min.css" }))
-        .pipe(dest(path.resolve("./", conf.out, conf.css)))
+        .pipe(dest(path.resolve(conf.root, conf.out, conf.css)))
     );
 }
 
 function images() {
   return (
-    src(path.resolve("./", conf.in, conf.img, "**/*"))
+    src(path.resolve(conf.root, conf.in, conf.img, "**/*"))
       .pipe(imagemin())
       .pipe(size(feedback("Compressed image(s)")))
-      .pipe(dest(path.resolve("./", conf.out, conf.img)))
+      .pipe(dest(path.resolve(conf.root, conf.out, conf.img)))
       // make WebP images
       .pipe(webp())
       .pipe(size(feedback("Created WebP image(s)")))
-      .pipe(dest(path.resolve("./", conf.out, conf.img)))
+      .pipe(dest(path.resolve(conf.root, conf.out, conf.img)))
   );
 }
 
 function svg() {
-  return src(path.resolve("./", conf.in, conf.svg, "*.svg"))
+  return src(path.resolve(conf.root, conf.in, conf.svg, "*.svg"))
     .pipe(svgmin({}))
     .pipe(size(feedback("Optimized SVG((s)")))
-    .pipe(dest(path.resolve("./", conf.out, conf.svg)));
+    .pipe(dest(path.resolve(conf.root, conf.out, conf.svg)));
 }
 
 function fonts() {
-  return src(path.resolve("./", conf.in, conf.fonts, "*.{ttf,otf}"))
+  return src(path.resolve(conf.root, conf.in, conf.fonts, "*.{ttf,otf}"))
     .pipe(ttf2woff())
     .pipe(ttf2woff2())
     .pipe(size(feedback("Created WOFF and WOFF2 font(s):")))
-    .pipe(dest(path.resolve("./", conf.out, conf.fonts)));
+    .pipe(dest(path.resolve(conf.root, conf.out, conf.fonts)));
 }
 
 function lintCss() {
   return (
-    src("src/scss/*.scss")
+    src(path.resolve(conf.root, conf.in, conf.scss, "*.scss"))
       .pipe(sass())
-      .pipe(dest("dist/css/"))
+      .pipe(dest(path.resolve(conf.root, conf.out, conf.css)))
       // https://github.com/CSSLint/csslint/wiki/Rules-by-ID
       .pipe(
         csslint({

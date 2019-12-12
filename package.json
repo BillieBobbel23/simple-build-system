@@ -1,6 +1,6 @@
 {
   "name": "simple-gulp-tasks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Gulp 4 tasks for a simple web application.",
   "main": "gulpfile.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "gulp",
+    "frontend",
     "build system",
     "simple build",
     "assets"
