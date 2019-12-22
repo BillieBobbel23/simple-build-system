@@ -8,6 +8,7 @@
   "img": "img/",
   "scss": "scss/",
   "svg": "svg/",
+  "js": "js/",
 
   "css": "css/"
 }
