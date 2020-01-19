@@ -1,7 +1,7 @@
 {
   "root": "./",
 
-  "in": "test/",
+  "in": "src/",
   "out": "dist/",
 
   "fonts": "fonts/",

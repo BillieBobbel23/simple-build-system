@@ -1,0 +1,10 @@
+{
+  "root": "./",
+  "woff2": "Created WOFF2:",
+  "woff": "Created WOFF:",
+  "webp": "Created WebP image:",
+  "svg": "Optimized SVG:",
+  "js": "Created JS file:",
+  "css": "Created CSS file:",
+  "img": "Compressed image:"
+}

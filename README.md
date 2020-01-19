@@ -4,7 +4,11 @@ Some simple tasks with GulpJS for a quick "build system".
 
 ## Installation:
 
-``git clone https://github.com/BillieBobbel23/simple-gulp-task your/path/here``
+Inside an empty directory run the clone command:  
+``git clone https://github.com/BillieBobbel23/simple-gulp-task .``
+
+After this install the project dependencies using `` npm install`` or ``yarn``.
+
 
 ## Usage
 Run some simple tasks for your project using GulpJS:

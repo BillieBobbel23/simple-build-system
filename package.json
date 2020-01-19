@@ -1,14 +1,20 @@
 {
   "name": "simple-gulp-tasks",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Gulp 4 tasks for a simple web application.",
   "main": "gulpfile.js",
   "scripts": {
+    "build": "npm run build:create",
+    "build:prod": "env NODE_ENV=production run-s build:clean build:create lint:*",
+    "build:clean": "rm -rf dist",
+    "build:create": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "gulp",
     "watch": "gulp watch",
     "lint:css": "gulp lintCss",
-    "serve": "start npx serve && start npm run watch && start http://localhost:5000"
+    "serve": "run-p serve:*",
+    "serve:server": "npx serve",
+    "serve:launch": "start http://localhost:5000",
+    "serve:watch": "npm run watch"
   },
   "keywords": [
     "gulp",
@@ -24,12 +30,12 @@
     "@babel/preset-env": "^7.7.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.0",
-    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.2.0",
     "gulp-concat": "^2.6.1",
     "gulp-csslint": "^1.0.1",
     "gulp-csso": "^4.0.1",
-    "gulp-imagemin": "^6.1.0",
+    "gulp-imagemin": "^7.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-size": "^3.0.0",
@@ -39,5 +45,8 @@
     "gulp-ttf2woff2": "^3.0.0",
     "gulp-webp": "^4.0.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

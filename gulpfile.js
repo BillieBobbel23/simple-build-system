@@ -24,11 +24,15 @@ const concat = require("gulp-concat");
 
 // configuration
 const conf = require("./config");
+const logs = require("./logs");
 
-function feedback(title, compact = true, pretty = true) {
+const env = process.env.NODE_ENV || "development";
+
+function feedback(title, showFiles = true, showTotal = false, pretty = true) {
   return {
     title: title,
-    showFiles: compact,
+    showFiles: showFiles,
+    showTotal: showTotal,
     pretty: pretty
   };
 }
@@ -37,7 +41,7 @@ function makeJs() {
   return src(path.resolve(conf.root, conf.in, conf.js, "**/*.{js,jsx}"))
     .pipe(babel({ presets: ["@babel/preset-env"] }))
     .pipe(rename("test.min.js"))
-    .pipe(size(feedback("Created JS file(s)")))
+    .pipe(size(feedback(logs.js)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.js)));
 }
 
@@ -47,7 +51,7 @@ function makeCss() {
     .pipe(autoprefixer())
     .pipe(dest(path.resolve(conf.out, conf.css)))
     .pipe(csso({ sourceMap: true }))
-    .pipe(size(feedback("Created CSS file(s)")))
+    .pipe(size(feedback(logs.css)))
     .pipe(rename({ extname: ".min.css" }))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.css)));
 }
@@ -55,34 +59,34 @@ function makeCss() {
 function minifyImages() {
   return src(path.resolve(conf.root, conf.in, conf.img, "**/*"))
     .pipe(imagemin())
-    .pipe(size(feedback("Compressed image(s)")))
+    .pipe(size(feedback(logs.img)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.img)));
 }
 
 function makeWebp() {
   return src(path.resolve(conf.root, conf.in, conf.img, "**/*"))
     .pipe(webp())
-    .pipe(size(feedback("Created WebP image(s)")))
+    .pipe(size(feedback(logs.webp)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.img)));
 }
 
 function minifySvg() {
   return src(path.resolve(conf.root, conf.in, conf.svg, "*.svg"))
     .pipe(svgmin({}))
-    .pipe(size(feedback("Optimized SVG((s)")))
+    .pipe(size(feedback(logs.svg)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.svg)));
 }
 
 function makeWoff() {
   return src(path.resolve(conf.root, conf.in, conf.fonts, "*.{ttf,otf}"))
     .pipe(ttf2woff())
-    .pipe(size(feedback("Created WOFF font(s):")))
+    .pipe(size(feedback(logs.woff)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.fonts)));
 }
 function makeWoff2() {
   return src(path.resolve(conf.root, conf.in, conf.fonts, "*.{ttf,otf}"))
     .pipe(ttf2woff2())
-    .pipe(size(feedback("Created WOFF WOFF2 font(s):")))
+    .pipe(size(feedback(logs.woff2)))
     .pipe(dest(path.resolve(conf.root, conf.out, conf.fonts)));
 }
 
@@ -102,23 +106,28 @@ function lintCss() {
       .pipe(csslint.formatter("compact"))
       .pipe(
         stylestats({
-          type: "json",
+          type: "txt",
           output: false
         })
       )
   );
 }
 
-// Watcher
 function watchAll() {
-  watch("./src/scss/**/*.scss", makeCss);
-  watch("./src/img/**/*.*", [minifyImages, makeWebp, makeSvg]);
-  watch("./src/fonts/**/*.*", [makeWoff, makeWoff2]);
+  // return [
+  return watch(path.resolve(conf.root, conf.in, conf.scss, "*.scss"), makeCss);
+  // return watch(["./src/scss/**/*.scss"], series(makeCss));
+  // watch(["./src/img/**/*.*"], parallel(minifyImages, makeWebp, minifySvg));
+  // watch(["./src/fonts/**/*.*"], makeWoff, makeWoff2);
+  // ];
 }
 
 exports.lintCss = lintCss;
 
-exports.watch = watchAll;
+exports.watch = function() {
+  watch(path.resolve(conf.root, conf.in, conf.scss, "*.scss"), makeCss);
+};
+
 exports.default = parallel(
   makeCss,
   makeJs,
