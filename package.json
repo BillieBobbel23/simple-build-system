@@ -1,6 +1,6 @@
 {
   "name": "simple-gulp-tasks",
-  "version": "0.5.0",
+  "version": "0.5.6",
   "description": "Gulp 4 tasks for a simple web application.",
   "main": "gulpfile.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "lint:css": "gulp lintCss",
     "serve": "run-p serve:*",
     "serve:server": "npx serve",
-    "serve:launch": "start http://localhost:5000",
+    "serve:launch": "opener http://localhost:5000",
     "serve:watch": "npm run watch"
   },
   "keywords": [
@@ -25,7 +25,7 @@
   ],
   "author": "BillieBobbel23",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "gulp": "^4.0.2",
@@ -44,9 +44,8 @@
     "gulp-ttf2woff": "^1.1.1",
     "gulp-ttf2woff2": "^3.0.0",
     "gulp-webp": "^4.0.1",
+    "npm-run-all": "^4.1.5",
+    "opener": "^1.5.1",
     "path": "^0.12.7"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
   }
 }

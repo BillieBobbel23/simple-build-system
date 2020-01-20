@@ -23,8 +23,8 @@ const babel = require("gulp-babel");
 const concat = require("gulp-concat");
 
 // configuration
-const conf = require("./config");
-const logs = require("./logs");
+const conf = require("./config/config");
+const logs = require("./config/logs");
 
 const env = process.env.NODE_ENV || "development";
 
