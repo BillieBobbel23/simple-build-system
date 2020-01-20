@@ -12,9 +12,9 @@
     "watch": "gulp watch",
     "lint:css": "gulp lintCss",
     "serve": "run-p serve:*",
+    "serve:build": "npm run build:create",
     "serve:server": "npx serve",
-    "serve:launch": "opener http://localhost:5000",
-    "serve:watch": "npm run watch"
+    "serve:launch": "opener http://localhost:5000"
   },
   "keywords": [
     "gulp",
